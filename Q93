@@ -1,0 +1,83 @@
+Q93: Check if two strings are anagrams of each other.
+
+/*
+Sample Test Cases:
+Input 1:
+listen
+silent
+Output 1:
+Anagrams
+
+Input 2:
+hello
+world
+Output 2:
+Not anagrams
+
+*/
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str1[100];
+    char str2[100];
+    int count1[26] = {0};
+    int count2[26] = {0};
+    int len1 = 0, len2 = 0;
+    int i;
+    int is_anagram = 1;
+
+    if (fgets(str1, sizeof(str1), stdin) == NULL || fgets(str2, sizeof(str2), stdin) == NULL)
+    {
+        return 1;
+    }
+
+    /* Calculate lengths and remove newline if present */
+    while (str1[len1] != '\0') len1++;
+    if (len1 > 0 && str1[len1 - 1] == '\n') len1--;
+
+    while (str2[len2] != '\0') len2++;
+    if (len2 > 0 && str2[len2 - 1] == '\n') len2--;
+
+    if (len1 != len2)
+    {
+        is_anagram = 0;
+    }
+    else
+    {
+        /* Populate frequency arrays */
+        for (i = 0; i < len1; i++)
+        {
+            if (str1[i] >= 'a' && str1[i] <= 'z')
+            {
+                count1[str1[i] - 'a']++;
+            }
+            if (str2[i] >= 'a' && str2[i] <= 'z')
+            {
+                count2[str2[i] - 'a']++;
+            }
+        }
+
+        /* Compare frequency arrays */
+        for (i = 0; i < 26; i++)
+        {
+            if (count1[i] != count2[i])
+            {
+                is_anagram = 0;
+                break;
+            }
+        }
+    }
+
+    if (is_anagram)
+    {
+        printf("Anagrams\n");
+    }
+    else
+    {
+        printf("Not anagrams\n");
+    }
+
+    return 0;
+}

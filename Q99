@@ -1,0 +1,66 @@
+Q99: Change the date format from dd/04/yyyy to dd-Apr-yyyy.
+
+/*
+Sample Test Cases:
+Input 1:
+15/04/2025
+Output 1:
+15-Apr-2025
+
+*/
+
+#include <stdio.h>
+#include <string.h>
+
+void replace_month(char *date, int month_num)
+{
+    char *month_names[] = {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
+    
+    char month_str[4];
+    
+    if (month_num >= 1 && month_num <= 12)
+    {
+        strcpy(month_str, month_names[month_num - 1]);
+
+        date[3] = '-';
+        date[4] = month_str[0];
+        date[5] = month_str[1];
+        date[6] = month_str[2];
+        date[7] = '-';
+    }
+}
+
+int main()
+{
+    char date_str[15];
+    int day, month, year;
+    
+    if (fgets(date_str, sizeof(date_str), stdin) == NULL)
+    {
+        return 1;
+    }
+    
+    if (sscanf(date_str, "%d/%d/%d", &day, &month, &year) != 3)
+    {
+        return 1;
+    }
+
+    if (month >= 1 && month <= 12)
+    {
+        char *month_names[] = {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+        
+        printf("%02d-%s-%d\n", day, month_names[month - 1], year);
+    }
+    else
+    {
+        return 1;
+    }
+
+    return 0;
+}
